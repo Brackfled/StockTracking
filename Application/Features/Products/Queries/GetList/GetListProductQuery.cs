@@ -1,0 +1,51 @@
+﻿
+using Application.Services.Repositories;
+using AutoMapper;
+using Core.Application.Request;
+using Core.Application.Response;
+using Core.Persistance.Paging;
+using Domain.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.Features.Products.Queries.GetList
+{
+    public class GetListProductQuery:IRequest<GetListResponse<GetListProductListItemDto>>
+    {
+
+        public PageRequest PageRequest {  get; set; }
+
+        public class GetListProductQueryHandler:IRequestHandler<GetListProductQuery, GetListResponse<GetListProductListItemDto>>
+        {
+            private readonly IProductRepository _productRepository;
+            private readonly IMapper _mapper;
+
+            public GetListProductQueryHandler(IProductRepository productRepository, IMapper mapper)
+            {
+                _productRepository = productRepository;
+                _mapper = mapper;
+            }
+
+            public async Task<GetListResponse<GetListProductListItemDto>> Handle(GetListProductQuery request, CancellationToken cancellationToken)
+            {
+                Paginate<Product> products = await _productRepository.GetListAsync(
+                        include: p=> p.Include(p=>p.Brand).Include(p=> p.Seller),
+                        index:request.PageRequest.PageIndex,
+                        size: request.PageRequest.PageSize,
+                        cancellationToken: cancellationToken,
+                        withDeleted: true
+                    );
+
+                GetListResponse<GetListProductListItemDto> response = _mapper.Map<GetListResponse<GetListProductListItemDto>>( products );
+
+                return response;
+
+            }
+        }
+    }
+}
