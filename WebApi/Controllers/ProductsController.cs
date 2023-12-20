@@ -2,6 +2,7 @@
 using Application.Features.Products.Commands.Delete;
 using Application.Features.Products.Commands.Update;
 using Application.Features.Products.Queries.GetList;
+using Core.Application.Request;
 using Core.Application.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +22,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] GetListProductQuery getListProductQuery)
+        public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
+            GetListProductQuery getListProductQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListProductListItemDto> response = await Mediator.Send(getListProductQuery);
 
             return Ok(response);

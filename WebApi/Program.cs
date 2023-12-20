@@ -24,6 +24,8 @@ if (app.Environment.IsDevelopment())
 //if(app.Environment.IsProduction())
 app.ConfigureCustomExceptionMiddleware();
 
+app.UseCors(builder => builder.WithOrigins("").AllowAnyOrigin().AllowAnyHeader());
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
