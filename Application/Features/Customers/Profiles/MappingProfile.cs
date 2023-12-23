@@ -1,7 +1,9 @@
 ﻿using Application.Features.Brands.Commands.Update;
+using Application.Features.Brands.Queries.GetById;
 using Application.Features.Customers.Commands.Create;
 using Application.Features.Customers.Commands.Delete;
 using Application.Features.Customers.Commands.Update;
+using Application.Features.Customers.Queries.GetById;
 using Application.Features.Customers.Queries.GetList;
 using AutoMapper;
 using Core.Application.Response;
@@ -32,6 +34,9 @@ namespace Application.Features.Customers.Profiles
             CreateMap<Customer, GetListCustomerQuery>().ReverseMap();
             CreateMap<Customer, GetListCustomerListItemDto>().ReverseMap();
             CreateMap<Paginate<Customer>, GetListResponse<GetListCustomerListItemDto>>().ReverseMap();
+
+            CreateMap<Customer, GetByIdCustomerQuery>().ReverseMap();
+            CreateMap<Customer, GetByIdCustomerResponse>().ReverseMap();
         }
 
     }

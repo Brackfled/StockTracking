@@ -4,19 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Sellers.Queries.GetList
+namespace Application.Features.Sellers.Queries.GetById
 {
-    public class GetListSellerListItemDto
+    public class GetByIdSellerResponse
     {
-
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string Adress { get; set; }
+        public string? Adress { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
-
     }
 }

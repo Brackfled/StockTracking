@@ -1,6 +1,8 @@
-﻿using Application.Features.Customers.Commands.Create;
+﻿using Application.Features.Brands.Queries.GetById;
+using Application.Features.Customers.Commands.Create;
 using Application.Features.Customers.Commands.Delete;
 using Application.Features.Customers.Commands.Update;
+using Application.Features.Customers.Queries.GetById;
 using Application.Features.Customers.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Response;
@@ -44,6 +46,14 @@ namespace WebApi.Controllers
         {
             UpdatedCustomerResponse response = await Mediator.Send(updateCustomerCommand);
 
+            return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            GetByIdCustomerQuery getByIdCustomerQuery = new() { Id = id };
+            GetByIdCustomerResponse response = await Mediator.Send(getByIdCustomerQuery);
             return Ok(response);
         }
 

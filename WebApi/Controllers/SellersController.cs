@@ -2,6 +2,7 @@
 using Application.Features.Sellers.Commands.Create;
 using Application.Features.Sellers.Commands.Delete;
 using Application.Features.Sellers.Commands.Update;
+using Application.Features.Sellers.Queries.GetById;
 using Application.Features.Sellers.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Response;
@@ -46,6 +47,14 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateSellerCommand updateSellerCommand)
         {
             UpdatedSellerResponse response = await Mediator.Send(updateSellerCommand);
+            return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            GetByIdSellerQuery getByIdSellerQuery = new() { Id = id };
+            GetByIdSellerResponse response = await Mediator.Send(getByIdSellerQuery);
             return Ok(response);
         }
     }

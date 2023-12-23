@@ -1,6 +1,7 @@
 ﻿using Application.Features.Products.Commands.Create;
 using Application.Features.Products.Commands.Delete;
 using Application.Features.Products.Commands.Update;
+using Application.Features.Products.Queries.GetById;
 using Application.Features.Products.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Response;
@@ -43,6 +44,15 @@ namespace WebApi.Controllers
         {
             UpdatedProductResponse response = await Mediator.Send(updateProductCommand);
             return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            GetByIdProductQuery getByIdProductQuery = new() { Id = id };
+            GetByIdProductDto response = await Mediator.Send(getByIdProductQuery);
+            return Ok(response);
+
         }
     }
 }

@@ -3,6 +3,7 @@ using Application.Features.Brands.Queries.GetList;
 using Application.Features.Products.Commands.Create;
 using Application.Features.Products.Commands.Delete;
 using Application.Features.Products.Commands.Update;
+using Application.Features.Products.Queries.GetById;
 using Application.Features.Products.Queries.GetList;
 using AutoMapper;
 using Core.Application.Response;
@@ -38,6 +39,12 @@ namespace Application.Features.Products.Profiles
                 .ForMember(destinationMember: p => p.SellerName, memberOptions: opt => opt.MapFrom(p => p.Seller.Name))
                 .ReverseMap();
             CreateMap<Paginate<Product>, GetListResponse<GetListProductListItemDto>>().ReverseMap();
+
+            CreateMap<Product, GetByIdProductQuery>().ReverseMap();
+            CreateMap<Product, GetByIdProductDto>()
+                .ForMember(destinationMember: p=>p.BrandName, memberOptions:opt=>opt.MapFrom(p=>p.Brand.Name))
+                .ForMember(destinationMember: p =>p.SellerName, memberOptions:opt=>opt.MapFrom(p=>p.Seller.Name))
+                .ReverseMap();
 
         }
 

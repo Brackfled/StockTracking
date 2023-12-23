@@ -2,6 +2,7 @@
 using Application.Features.Sellers.Commands.Create;
 using Application.Features.Sellers.Commands.Delete;
 using Application.Features.Sellers.Commands.Update;
+using Application.Features.Sellers.Queries.GetById;
 using Application.Features.Sellers.Queries.GetList;
 using AutoMapper;
 using Core.Application.Response;
@@ -32,6 +33,9 @@ namespace Application.Features.Sellers.Profiles
             CreateMap<Seller, GetListSellerListItemDto>().ReverseMap();
             CreateMap<Seller, GetListSellerQuery>().ReverseMap();
             CreateMap<Paginate<Seller>, GetListResponse<GetListSellerListItemDto>>().ReverseMap();
+
+            CreateMap<Seller, GetListSellerQuery>().ReverseMap();
+            CreateMap<Seller, GetByIdSellerResponse>().ReverseMap();
         }
 
     }
