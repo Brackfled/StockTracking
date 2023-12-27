@@ -19,7 +19,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Add([FromBody] CreateProductCommand createProductCommand)
         {
             CreatedProductResponse response = await Mediator.Send(createProductCommand);
-            return Ok();
+            return Ok(response);
         }
 
         [HttpGet]

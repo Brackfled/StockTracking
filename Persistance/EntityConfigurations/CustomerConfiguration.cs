@@ -26,7 +26,7 @@ namespace Persistance.EntityConfigurations
             builder.Property(b => b.UpdatedDate).HasColumnName("UpdatedDate");
             builder.Property(b => b.DeletedDate).HasColumnName("DeletedDate");
 
-            builder.HasIndex(indexExpression: s => s.Name, name: "UK_Sellers_Name").IsUnique();
+            builder.HasIndex(indexExpression: s => s.Name, name: "UK_Customers_Name").IsUnique();
 
             builder.HasQueryFilter(s => !s.DeletedDate.HasValue);
         }

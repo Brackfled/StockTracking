@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Brands.Commands.Create
 {
-    public class CreateBrandCommanValidator:AbstractValidator<CreateBrandCommand>
+    public class CreateBrandCommandValidator:AbstractValidator<CreateBrandCommand>
     {
 
-        public CreateBrandCommanValidator()
+        public CreateBrandCommandValidator()
         {
-            RuleFor(b => b.Name).NotEmpty().MinimumLength(2) ;
+            RuleFor(b => b.Name).NotEmpty().MinimumLength(6).MaximumLength(16);
         }
 
     }

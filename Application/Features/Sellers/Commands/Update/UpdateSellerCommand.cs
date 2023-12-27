@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Sellers.Rules;
+using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -23,25 +24,29 @@ namespace Application.Features.Sellers.Commands.Update
         {
             private readonly ISellerRepository _sellerRepository;
             private readonly IMapper _mapper;
+            private readonly SellerBusinessRules _sellerBusinessRules;
 
-            public UpdateSellerCommandHandler(ISellerRepository sellerRepository, IMapper mapper)
+            public UpdateSellerCommandHandler(ISellerRepository sellerRepository, IMapper mapper, SellerBusinessRules sellerBusinessRules)
             {
                 _sellerRepository = sellerRepository;
                 _mapper = mapper;
+                _sellerBusinessRules = sellerBusinessRules;
             }
 
             public async Task<UpdatedSellerResponse> Handle(UpdateSellerCommand request, CancellationToken cancellationToken)
             {
                 Seller? seller = await _sellerRepository.GetAsync(predicate: s => s.Id == request.Id, cancellationToken:cancellationToken);
 
-                if (request.Name != null)
-                    seller.Name = request.Name;
-                if (request.PhoneNumber != null)
-                    seller.PhoneNumber = request.PhoneNumber;
-                if (request.Email != null)
-                    seller.Email = request.Email;
-                if (request.Adress != null)
-                    seller.Adress = request.Adress;
+                await _sellerBusinessRules.CheckPropertiesHasAnyOneChanged(request, seller);
+
+                //if (request.Name != null)
+                //    seller.Name = request.Name;
+                //if (request.PhoneNumber != null)
+                //    seller.PhoneNumber = request.PhoneNumber;
+                //if (request.Email != null)
+                //    seller.Email = request.Email;
+                //if (request.Adress != null)
+                //    seller.Adress = request.Adress;
 
                 await _sellerRepository.UpdateAsync(seller);
 

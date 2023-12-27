@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Customers.Rules;
+using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -25,27 +26,20 @@ namespace Application.Features.Customers.Commands.Update
 
             private readonly ICustomerRepository _customerRepository;
             private readonly IMapper _mapper;
+            private readonly CustomerBusinessRules _customerBusinessRules;
 
-            public UpdateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper)
+            public UpdateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper, CustomerBusinessRules customerBusinessRules)
             {
                 _customerRepository = customerRepository;
                 _mapper = mapper;
+                _customerBusinessRules = customerBusinessRules;
             }
 
             public async Task<UpdatedCustomerResponse> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
             {
                 Customer? customer = await _customerRepository.GetAsync(predicate: c=> c.Id == request.Id, withDeleted:true, cancellationToken:cancellationToken);
 
-                if (request.Name != null)
-                    customer.Name = request.Name;
-                if (request.CompanyName != null)
-                    customer.CompanyName = request.CompanyName;
-                if (request.Email != null)
-                    customer.Email = request.Email;
-                if (request.PhoneNumber != null)
-                    customer.PhoneNumber = request.PhoneNumber;
-                if(request.Adress != null)
-                    customer.Adress = request.Adress;
+               await _customerBusinessRules.CheckPropertiesHasAnyOneChanged(request,customer);
 
                 await _customerRepository.UpdateAsync(customer);
 

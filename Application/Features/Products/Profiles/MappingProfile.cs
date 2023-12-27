@@ -27,11 +27,12 @@ namespace Application.Features.Products.Profiles
             CreateMap<Product, DeletedProductResponse>().ReverseMap();
 
             CreateMap<Product, CreateProductCommand>().ReverseMap();
-            CreateMap<Product, CreatedProductResponse>().ReverseMap();
+            CreateMap<Product, CreatedProductResponse>()
+                .ForMember(destinationMember: p => p.BrandName, memberOptions: opt => opt.MapFrom(p => p.Brand.Name))
+                .ForMember(destinationMember: p => p.SellerName, memberOptions: opt => opt.MapFrom(p => p.Seller.Name))
+                .ReverseMap();
 
-            CreateMap<UpdateProductCommand, Product>()
-                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
-                
+            CreateMap<UpdateProductCommand, Product>().ReverseMap();              
             CreateMap<Product, UpdatedProductResponse>().ReverseMap();
 
             CreateMap<Product, GetListProductListItemDto>()
