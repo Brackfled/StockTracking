@@ -12,7 +12,7 @@ namespace Application.Features.Brands.Commands.Create
 
         public CreateBrandCommandValidator()
         {
-            RuleFor(b => b.Name).NotEmpty().MinimumLength(6).MaximumLength(16);
+            RuleFor(b => b.Name).NotEmpty().MinimumLength(6).MaximumLength(30);
         }
 
     }

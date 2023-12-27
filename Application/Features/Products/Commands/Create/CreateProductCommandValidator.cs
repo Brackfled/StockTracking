@@ -12,8 +12,8 @@ namespace Application.Features.Products.Commands.Create
         public CreateProductCommandValidator()
         {
 
-            RuleFor(p => p.Name).NotEmpty().MaximumLength(6).MaximumLength(16);
-            RuleFor(p => p.ProductDetail).NotEmpty().MaximumLength(6).MaximumLength(16);
+            RuleFor(p => p.Name).NotEmpty().MinimumLength(6).MaximumLength(30);
+            RuleFor(p => p.ProductDetail).NotEmpty().MinimumLength(6).MaximumLength(30);
             RuleFor(p => p.StockAmount).NotEmpty();
 
         }
