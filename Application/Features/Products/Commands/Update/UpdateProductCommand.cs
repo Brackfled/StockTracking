@@ -16,6 +16,8 @@ namespace Application.Features.Products.Commands.Update
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
+        //public string? BrandName { get; set; }
+        //public string? SellerName { get; set; }  
         public string? ProductDetail { get; set; }
         public int? StockAmount { get; set; }
 

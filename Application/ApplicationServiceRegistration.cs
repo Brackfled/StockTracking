@@ -1,4 +1,7 @@
-﻿using Core.Application.Pipelines.Validation;
+﻿using Application.Services.AuthService;
+using Application.Services.UserService;
+using Core.Application.Pipelines.Authorization;
+using Core.Application.Pipelines.Validation;
 using Core.Application.Rules;
 using FluentValidation;
 using MediatR;
@@ -26,7 +29,11 @@ namespace Application
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
                 configuration.AddOpenBehavior(typeof(RequestValidationBehavior<,>));
+                configuration.AddOpenBehavior(typeof(AuthorizationBehavior<,>));
             });
+
+            services.AddScoped<IAuthService, AuthManager>();
+            services.AddScoped<IUserService, UserManager>();
 
             return services;
         }

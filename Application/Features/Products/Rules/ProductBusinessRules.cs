@@ -31,7 +31,11 @@ namespace Application.Features.Products.Rules
 
             if (request.Name != null)
                 product.Name = request.Name;
-            if(request.ProductDetail != null)
+            //if (request.BrandName != null)
+            //    product.Brand.Name = request.BrandName;
+            //if(request.SellerName != null)
+            //    product.Seller.Name = request.SellerName;
+            //if(request.ProductDetail != null)
                 product.ProductDetail = request.ProductDetail;
             if (request.StockAmount != null)
                 product.StockAmount = (int)request.StockAmount;

@@ -11,8 +11,8 @@ namespace Application.Features.Customers.Commands.Create
     {
         public CreateCustomerCommandValidator()
         {
-            RuleFor(c => c.Name).NotEmpty().MaximumLength(6).MaximumLength(30);
-            RuleFor(c => c.CompanyName).NotEmpty().MaximumLength(6).MaximumLength(30);
+            RuleFor(c => c.Name).NotEmpty().MinimumLength(6).MaximumLength(30);
+            RuleFor(c => c.CompanyName).NotEmpty().MinimumLength(6).MaximumLength(30);
             RuleFor(c => c.Email).NotEmpty().EmailAddress();
             RuleFor(c => c.Adress).NotEmpty().MaximumLength(50);
             RuleFor(c => c.PhoneNumber).NotEmpty();
